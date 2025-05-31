@@ -1,0 +1,26 @@
+
+    <h1>Job Offer Letter</h1>
+    <p>Dear John Smith,</p>
+    
+    <p>We are pleased to offer you the position of <strong>General  Manager</strong> at our company.</p>
+    
+    <h3>Offer Details:</h3>
+    <ul>
+        <li>Position: General  Manager</li>
+        <li>Department: Geology</li>
+        <li>Annual Salary: $150,001.00</li>
+        <li>Start Date: June 25, 2025</li>
+    </ul>
+    
+    <h3>Benefits:</h3><p>• Health Insurance
+• 401(k) Matching
+• Flexible PTO</p>
+    
+    
+    
+    <p>This offer is contingent upon successful completion of background checks and any other conditions outlined in our employment policies.</p>
+    
+    <p>We look forward to having you join our team!</p>
+    
+    <p>Sincerely,<br>HR Department</p>
+    

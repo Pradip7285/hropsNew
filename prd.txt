@@ -1,0 +1,167 @@
+Product Requirements Document (PRD) - HR Employee Lifecycle Management Application
+Document Owner: [Your Name]
+Date: [Today's Date]
+Version: 1.0
+
+1. Introduction
+1.1 Purpose
+This document outlines the requirements for an HR Employee Lifecycle Management Application designed to streamline HR processes from resume shortlisting to onboarding. The application will automate workflows, improve collaboration, and enhance the candidate/employee experience.
+
+1.2 Scope
+The application will cover:
+
+Resume parsing & shortlisting
+
+Interview scheduling & feedback
+
+Offer management
+
+Pre-onboarding & documentation
+
+Employee onboarding & training
+
+Analytics & reporting
+
+1.3 Target Users
+HR Recruiters
+
+Hiring Managers
+
+Interviewers
+
+New Hires (Employees)
+
+Administrators
+
+2. Features & Functionalities
+2.1 Resume Shortlisting & Candidate Management
+2.1.1 Resume Parsing & AI-Based Screening
+Upload resumes (PDF, DOCX, LinkedIn profiles)
+
+AI-powered keyword & skills extraction
+
+Automated ranking based on job requirements
+
+Duplicate detection to avoid redundancy
+
+2.1.2 Candidate Dashboard
+Track candidate status (New, Shortlisted, Rejected)
+
+Search & filter candidates by skills, experience, location
+
+Bulk actions (send emails, update status)
+
+2.1.3 Collaboration Tools
+Internal notes & comments on candidates
+
+Tagging & assignment to recruiters/hiring managers
+
+2.2 Interview Management
+2.2.1 Automated Interview Scheduling
+Calendar integration (Google, Outlook)
+
+Auto-send invites with Zoom/Teams links
+
+Buffer time management between interviews
+
+2.2.2 Interview Feedback & Evaluation
+Structured feedback forms (ratings, comments)
+
+Scorecards for objective evaluation
+
+Consolidated feedback for hiring decisions
+
+2.2.3 Interview Analytics
+Time-to-feedback metrics
+
+Bias detection in evaluations
+
+2.3 Offer & Approval Workflow
+2.3.1 Offer Generation
+Customizable offer templates (salary, benefits, clauses)
+
+Electronic signatures (DocuSign integration)
+
+2.3.2 Approval Workflow
+Multi-level approvals (HR > Finance > Leadership)
+
+Audit trail of changes
+
+2.4 Pre-Onboarding & Documentation
+2.4.1 Digital Document Collection
+Upload ID proofs, bank details, tax forms
+
+eSignatures for compliance
+
+2.4.2 Task Automation
+Checklist for new hires (IT setup, access cards)
+
+Reminders for pending tasks
+
+2.5 Employee Onboarding
+2.5.1 Personalized Onboarding Portal
+Welcome message & company handbook
+
+Training modules & videos
+
+2.5.2 Buddy System & Mentorship
+Assign a buddy for guidance
+
+Chat/FAQ for new hires
+
+2.5.3 Progress Tracking
+HR dashboard to monitor onboarding completion
+
+Surveys for feedback
+
+2.6 Reporting & Analytics
+2.6.1 Recruitment Metrics
+Time-to-hire, cost-per-hire
+
+Source effectiveness (LinkedIn, referrals)
+
+2.6.2 Employee Onboarding Insights
+Engagement scores
+
+Retention prediction
+
+3. Technical Requirements
+3.1 Integrations
+ATS (LinkedIn, Indeed, Greenhouse)
+
+HRIS (Workday, BambooHR)
+
+Email (Gmail, Outlook)
+
+eSign (DocuSign, Adobe Sign)
+
+SSO (Okta, Microsoft Azure AD)
+
+3.2 Security & Compliance
+GDPR/CCPA compliance
+
+Role-based access control (RBAC)
+
+Audit logs
+
+3.3 Scalability
+Cloud-based (AWS/Azure)
+
+API-first architecture
+
+4. Success Metrics
+Reduction in time-to-hire (by 30%)
+
+Improved candidate satisfaction (NPS > 70)
+
+Higher onboarding completion rate (>90%)
+
+5. Roadmap & Timeline
+Phase	Features	Timeline
+Phase 1	Resume parsing, Interview scheduling	Q1 2025
+Phase 2	Offer management, Pre-onboarding	Q2 2025
+Phase 3	Full onboarding, Analytics	Q3 2025
+6. Stakeholders & Approvals
+Role	Name	Approval Status
+HR Head	[Name]	Pending
+CTO	[Name]	Approved
