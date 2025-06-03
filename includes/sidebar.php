@@ -49,8 +49,12 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
                 </div>
                 <ul class="ml-8 mt-1 space-y-1 <?php echo ($current_dir == 'interviews') ? 'block' : 'hidden group-hover:block'; ?>">
                     <li><a href="<?php echo BASE_URL; ?>/interviews/list.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">All Interviews</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>/interviews/today.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Today's Interviews</a></li>
                     <li><a href="<?php echo BASE_URL; ?>/interviews/schedule.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Schedule New</a></li>
                     <li><a href="<?php echo BASE_URL; ?>/interviews/calendar.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Calendar View</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>/interviews/reminders.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Reminders</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>/interviews/questions.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Question Bank</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>/interviews/reports.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Analytics</a></li>
                 </ul>
             </li>
             
@@ -68,6 +72,7 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
                     <li><a href="<?php echo BASE_URL; ?>/offers/create.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Create Offer</a></li>
                     <li><a href="<?php echo BASE_URL; ?>/offers/templates.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Templates</a></li>
                     <li><a href="<?php echo BASE_URL; ?>/offers/approvals.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Pending Approvals</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>/offers/analytics.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Analytics</a></li>
                 </ul>
             </li>
             
@@ -86,6 +91,28 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
                     <li><a href="<?php echo BASE_URL; ?>/onboarding/templates.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Task Templates</a></li>
                     <li><a href="<?php echo BASE_URL; ?>/onboarding/documents.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Documents</a></li>
                     <li><a href="<?php echo BASE_URL; ?>/onboarding/training.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Training Modules</a></li>
+                </ul>
+            </li>
+            
+            <!-- Performance Management -->
+            <li class="group">
+                <div class="flex items-center justify-between px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100 transition duration-200 <?php echo ($current_dir == 'performance') ? 'bg-blue-100 text-blue-700' : ''; ?>">
+                    <div class="flex items-center">
+                        <i class="fas fa-chart-line mr-3"></i>
+                        Performance
+                    </div>
+                    <i class="fas fa-chevron-down text-xs group-hover:rotate-180 transition-transform duration-200"></i>
+                </div>
+                <ul class="ml-8 mt-1 space-y-1 <?php echo ($current_dir == 'performance') ? 'block' : 'hidden group-hover:block'; ?>">
+                    <li><a href="<?php echo BASE_URL; ?>/performance/my_goals.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">My Goals</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>/performance/goals.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Goals Management</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>/performance/cycles.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Review Cycles</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>/performance/reviews.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Performance Reviews</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>/performance/feedback_360.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">360° Feedback</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>/performance/my_360_feedback.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">My 360° Feedback</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>/performance/development.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Development Plans</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>/performance/improvement.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Improvement Plans</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>/performance/analytics.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Analytics</a></li>
                 </ul>
             </li>
             

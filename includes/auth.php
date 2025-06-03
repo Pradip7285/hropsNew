@@ -5,6 +5,14 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+// Function to require login only (no specific role)
+function requireLogin() {
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: ' . BASE_URL . 'login.php');
+        exit();
+    }
+}
+
 // Function to check user role permissions
 function hasPermission($required_role) {
     $role_hierarchy = [

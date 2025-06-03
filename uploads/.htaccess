@@ -1,0 +1,22 @@
+# Prevent direct access to uploaded files
+# Files should only be accessed through download scripts
+
+# Deny all direct access
+Deny from all
+
+# Allow only specific file types to be processed by PHP scripts
+<FilesMatch "\.(php)$">
+    Allow from all
+</FilesMatch>
+
+# Prevent execution of uploaded scripts
+php_flag engine off
+
+# Disable directory browsing
+Options -Indexes
+
+# Prevent access to sensitive file types
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|sql|txt)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch> 
