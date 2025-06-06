@@ -404,20 +404,20 @@ $related_interviews = $related_stmt->fetchAll(PDO::FETCH_ASSOC);
     <script>
         function markCompleted(id) {
             if (confirm('Mark this interview as completed? You will be able to add feedback afterward.')) {
-                window.location.href = 'update_status.php?id=' + id + '&status=completed&redirect=view';
+                window.location.href = '<?php echo BASE_URL; ?>/interviews/update_status.php?id=' + id + '&status=completed&redirect=view';
             }
         }
         
         function cancelInterview(id) {
             const reason = prompt('Please provide a reason for cancellation:');
             if (reason !== null && reason.trim() !== '') {
-                window.location.href = 'update_status.php?id=' + id + '&status=cancelled&reason=' + encodeURIComponent(reason) + '&redirect=view';
+                window.location.href = '<?php echo BASE_URL; ?>/interviews/update_status.php?id=' + id + '&status=cancelled&reason=' + encodeURIComponent(reason) + '&redirect=view';
             }
         }
         
         function rescheduleInterview(id) {
             if (confirm('Reschedule this interview? You will be redirected to the edit page.')) {
-                window.location.href = 'edit.php?id=' + id;
+                window.location.href = '<?php echo BASE_URL; ?>/interviews/edit.php?id=' + id;
             }
         }
     </script>

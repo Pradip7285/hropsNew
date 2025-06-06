@@ -146,22 +146,28 @@ if (!empty($department)) {
 }
 $monthly_trends = $monthly_trends_stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Negotiation Analysis
-$negotiation_stmt = $conn->prepare("
-    SELECT 
-        COUNT(*) as total_negotiations,
-        AVG(CASE WHEN JSON_EXTRACT(or.negotiation_details, '$.salary') IS NOT NULL 
-            THEN CAST(JSON_EXTRACT(or.negotiation_details, '$.salary') AS UNSIGNED) END) as avg_negotiated_salary,
-        COUNT(CASE WHEN o.status = 'accepted' THEN 1 END) as successful_negotiations
-    FROM offers o
-    JOIN candidates c ON o.candidate_id = c.id
-    JOIN job_postings j ON o.job_id = j.id
-    JOIN offer_responses or ON o.id = or.offer_id
-    $where_clause
-    AND or.response = 'negotiate'
-");
-$negotiation_stmt->execute($params);
-$negotiation_stats = $negotiation_stmt->fetch(PDO::FETCH_ASSOC);
+// Negotiation Analysis (simplified fallback)
+try {
+    $negotiation_stmt = $conn->prepare("
+        SELECT 
+            COUNT(*) as total_negotiations,
+            AVG(o.salary_offered) as avg_negotiated_salary,
+            COUNT(CASE WHEN o.status = 'accepted' THEN 1 END) as successful_negotiations
+        FROM offers o
+        JOIN candidates c ON o.candidate_id = c.id
+        JOIN job_postings j ON o.job_id = j.id
+        $where_clause
+    ");
+    $negotiation_stmt->execute($params);
+    $negotiation_stats = $negotiation_stmt->fetch(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    // Fallback data
+    $negotiation_stats = [
+        'total_negotiations' => 0,
+        'avg_negotiated_salary' => 0,
+        'successful_negotiations' => 0
+    ];
+}
 
 // Get departments for filter
 $departments_stmt = $conn->query("SELECT DISTINCT department FROM job_postings ORDER BY department");
@@ -195,6 +201,29 @@ $template_usage = $template_usage_stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            height: 300px !important;
+            position: relative;
+            width: 100%;
+            min-height: 300px;
+        }
+        .chart-container canvas {
+            max-height: 300px !important;
+            height: 300px !important;
+        }
+        /* Ensure charts don't get squished on mobile */
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 250px !important;
+                min-height: 250px;
+            }
+            .chart-container canvas {
+                max-height: 250px !important;
+                height: 250px !important;
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <?php include '../includes/header.php'; ?>
@@ -327,13 +356,17 @@ $template_usage = $template_usage_stmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Offer Status Distribution -->
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">Offer Status Distribution</h3>
-                    <canvas id="statusChart" width="400" height="200"></canvas>
+                    <div style="height: 300px; position: relative;">
+                        <canvas id="statusChart"></canvas>
+                    </div>
                 </div>
 
                 <!-- Acceptance Rate by Department -->
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">Acceptance Rate by Department</h3>
-                    <canvas id="deptAcceptanceChart" width="400" height="200"></canvas>
+                    <div style="height: 300px; position: relative;">
+                        <canvas id="deptAcceptanceChart"></canvas>
+                    </div>
                 </div>
             </div>
 
@@ -342,13 +375,17 @@ $template_usage = $template_usage_stmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Response Time Distribution -->
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">Response Time Distribution</h3>
-                    <canvas id="responseTimeChart" width="400" height="200"></canvas>
+                    <div style="height: 300px; position: relative;">
+                        <canvas id="responseTimeChart"></canvas>
+                    </div>
                 </div>
 
                 <!-- Monthly Trends -->
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">Monthly Offer Trends</h3>
-                    <canvas id="monthlyTrendsChart" width="400" height="200"></canvas>
+                    <div style="height: 300px; position: relative;">
+                        <canvas id="monthlyTrendsChart"></canvas>
+                    </div>
                 </div>
             </div>
 

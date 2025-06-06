@@ -117,8 +117,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             "Scheduled interview for {$candidate['first_name']} {$candidate['last_name']}"
                         );
                         
-                        // Send email notifications (placeholder)
-                        sendInterviewNotifications($interview_id, $candidate, $interviewers, $scheduled_datetime);
+                        // Send email notifications
+                        require_once 'email_notifications.php';
+                        sendInterviewScheduledNotification($interview_id);
                         
                         $success = 'Interview scheduled successfully! Notifications have been sent to all participants.';
                         

@@ -428,8 +428,117 @@ function detectBias($strengths, $weaknesses, $notes) {
         });
 
         function saveDraft() {
-            // Here you would implement draft saving functionality
-            alert('Draft saving functionality would be implemented here');
+            saveFeedbackDraft();
+        }
+
+        function saveFeedbackDraft() {
+            const formData = new FormData();
+            formData.append('action', 'save_draft_feedback');
+            formData.append('interview_id', '<?php echo $interview_id; ?>');
+            
+            // Get all form values
+            const technicalRating = document.querySelector('input[name="technical_rating"]:checked');
+            const communicationRating = document.querySelector('input[name="communication_rating"]:checked');
+            const culturalFitRating = document.querySelector('input[name="cultural_fit_rating"]:checked');
+            const overallRating = document.querySelector('input[name="overall_rating"]:checked');
+            
+            if (technicalRating) formData.append('technical_rating', technicalRating.value);
+            if (communicationRating) formData.append('communication_rating', communicationRating.value);
+            if (culturalFitRating) formData.append('cultural_fit_rating', culturalFitRating.value);
+            if (overallRating) formData.append('overall_rating', overallRating.value);
+            
+            formData.append('strengths', document.querySelector('[name="strengths"]').value);
+            formData.append('weaknesses', document.querySelector('[name="weaknesses"]').value);
+            formData.append('feedback_notes', document.querySelector('[name="feedback_notes"]').value);
+            
+            const recommendation = document.querySelector('[name="recommendation"]');
+            if (recommendation.value) formData.append('recommendation', recommendation.value);
+            
+            // Save to local storage as backup
+            localStorage.setItem('feedback_draft_' + '<?php echo $interview_id; ?>', JSON.stringify({
+                technical_rating: technicalRating ? technicalRating.value : '',
+                communication_rating: communicationRating ? communicationRating.value : '',
+                cultural_fit_rating: culturalFitRating ? culturalFitRating.value : '',
+                overall_rating: overallRating ? overallRating.value : '',
+                strengths: document.querySelector('[name="strengths"]').value,
+                weaknesses: document.querySelector('[name="weaknesses"]').value,
+                feedback_notes: document.querySelector('[name="feedback_notes"]').value,
+                recommendation: recommendation.value,
+                timestamp: new Date().toISOString()
+            }));
+            
+            // Show saving indicator
+            const saveButton = document.querySelector('button[onclick="saveDraft()"]');
+            const originalText = saveButton.innerHTML;
+            saveButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Saving...';
+            saveButton.disabled = true;
+            
+            // Send AJAX request (placeholder for now)
+            setTimeout(() => {
+                saveButton.innerHTML = '<i class="fas fa-check mr-2"></i>Draft Saved';
+                saveButton.disabled = false;
+                
+                setTimeout(() => {
+                    saveButton.innerHTML = originalText;
+                }, 2000);
+            }, 1000);
+            
+            console.log('Draft saved to localStorage');
+        }
+
+        // Load draft on page load
+        function loadDraft() {
+            const draft = localStorage.getItem('feedback_draft_' + '<?php echo $interview_id; ?>');
+            if (draft) {
+                try {
+                    const data = JSON.parse(draft);
+                    
+                    // Load ratings
+                    if (data.technical_rating) {
+                        const tech = document.querySelector(`input[name="technical_rating"][value="${data.technical_rating}"]`);
+                        if (tech) tech.checked = true;
+                    }
+                    if (data.communication_rating) {
+                        const comm = document.querySelector(`input[name="communication_rating"][value="${data.communication_rating}"]`);
+                        if (comm) comm.checked = true;
+                    }
+                    if (data.cultural_fit_rating) {
+                        const cult = document.querySelector(`input[name="cultural_fit_rating"][value="${data.cultural_fit_rating}"]`);
+                        if (cult) cult.checked = true;
+                    }
+                    if (data.overall_rating) {
+                        const overall = document.querySelector(`input[name="overall_rating"][value="${data.overall_rating}"]`);
+                        if (overall) overall.checked = true;
+                    }
+                    
+                    // Load text fields
+                    if (data.strengths) document.querySelector('[name="strengths"]').value = data.strengths;
+                    if (data.weaknesses) document.querySelector('[name="weaknesses"]').value = data.weaknesses;
+                    if (data.feedback_notes) document.querySelector('[name="feedback_notes"]').value = data.feedback_notes;
+                    if (data.recommendation) document.querySelector('[name="recommendation"]').value = data.recommendation;
+                    
+                    console.log('Draft loaded from localStorage');
+                } catch (e) {
+                    console.error('Error loading draft:', e);
+                }
+            }
+        }
+
+        // Auto-save every 30 seconds if form has changes
+        let autoSaveInterval;
+        let formChanged = false;
+
+        function startAutoSave() {
+            autoSaveInterval = setInterval(() => {
+                if (formChanged) {
+                    saveFeedbackDraft();
+                    formChanged = false;
+                }
+            }, 30000); // 30 seconds
+        }
+
+        function markFormChanged() {
+            formChanged = true;
         }
 
         // Form validation

@@ -109,7 +109,13 @@ $reviews = $reviews_stmt->fetchAll(PDO::FETCH_ASSOC);
 $cycles_stmt = $conn->query("SELECT id, cycle_name, cycle_year FROM performance_cycles ORDER BY cycle_year DESC, cycle_name");
 $cycles = $cycles_stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$employees_stmt = $conn->query("SELECT id, first_name, last_name, employee_id, department FROM employees WHERE status = 'active' ORDER BY first_name, last_name");
+$employees_stmt = $conn->query("
+    SELECT e.id, u.first_name, u.last_name, e.employee_id, e.department 
+    FROM employees e 
+    JOIN users u ON e.user_id = u.id 
+    WHERE u.is_active = 1 
+    ORDER BY u.first_name, u.last_name
+");
 $employees = $employees_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Get statistics

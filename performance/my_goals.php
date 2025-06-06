@@ -10,8 +10,8 @@ $db = new Database();
 $conn = $db->getConnection();
 
 // Get current user's employee record
-$employee_stmt = $conn->prepare("SELECT id FROM employees WHERE email = ?");
-$employee_stmt->execute([$_SESSION['email']]);
+$employee_stmt = $conn->prepare("SELECT id FROM employees WHERE user_id = ?");
+$employee_stmt->execute([$_SESSION['user_id']]);
 $employee = $employee_stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$employee) {

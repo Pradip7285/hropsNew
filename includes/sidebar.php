@@ -48,13 +48,13 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
                     <i class="fas fa-chevron-down text-xs group-hover:rotate-180 transition-transform duration-200"></i>
                 </div>
                 <ul class="ml-8 mt-1 space-y-1 <?php echo ($current_dir == 'interviews') ? 'block' : 'hidden group-hover:block'; ?>">
-                    <li><a href="<?php echo BASE_URL; ?>/interviews/list.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">All Interviews</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>/interviews/today.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Today's Interviews</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>/interviews/schedule.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Schedule New</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>/interviews/calendar.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Calendar View</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>/interviews/reminders.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Reminders</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>/interviews/questions.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Question Bank</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>/interviews/reports.php" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Analytics</a></li>
+                    <li><a href="<?php echo url('interviews/list.php'); ?>" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">All Interviews</a></li>
+                    <li><a href="<?php echo url('interviews/today.php'); ?>" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Today's Interviews</a></li>
+                    <li><a href="<?php echo url('interviews/schedule.php'); ?>" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Schedule New</a></li>
+                    <li><a href="<?php echo url('interviews/calendar.php'); ?>" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Calendar View</a></li>
+                    <li><a href="<?php echo url('interviews/reminders.php'); ?>" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Reminders</a></li>
+                    <li><a href="<?php echo url('interviews/questions.php'); ?>" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Question Bank</a></li>
+                    <li><a href="<?php echo url('interviews/reports.php'); ?>" class="block px-4 py-1 text-sm text-gray-600 hover:text-blue-600">Analytics</a></li>
                 </ul>
             </li>
             
@@ -173,11 +173,30 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
     <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
         <div class="flex items-center">
             <div class="bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold mr-3">
-                <?php echo strtoupper(substr($_SESSION['first_name'], 0, 1) . substr($_SESSION['last_name'], 0, 1)); ?>
+                <?php 
+                $first_initial = isset($_SESSION['first_name']) ? substr($_SESSION['first_name'], 0, 1) : '';
+                $last_initial = isset($_SESSION['last_name']) ? substr($_SESSION['last_name'], 0, 1) : '';
+                if (!$first_initial && !$last_initial) {
+                    // Fallback to username initial if name is not available
+                    echo strtoupper(substr($_SESSION['username'] ?? 'U', 0, 1));
+                } else {
+                    echo strtoupper($first_initial . $last_initial);
+                }
+                ?>
             </div>
             <div class="flex-1 min-w-0">
                 <p class="text-sm font-medium text-gray-900 truncate">
-                    <?php echo htmlspecialchars($_SESSION['first_name'] . ' ' . $_SESSION['last_name']); ?>
+                    <?php 
+                    $full_name = '';
+                    if (isset($_SESSION['first_name']) && isset($_SESSION['last_name'])) {
+                        $full_name = $_SESSION['first_name'] . ' ' . $_SESSION['last_name'];
+                    } elseif (isset($_SESSION['full_name'])) {
+                        $full_name = $_SESSION['full_name'];
+                    } else {
+                        $full_name = $_SESSION['username'] ?? 'User';
+                    }
+                    echo htmlspecialchars($full_name);
+                    ?>
                 </p>
                 <p class="text-xs text-gray-500 truncate">
                     <?php echo ucfirst($_SESSION['role']); ?>

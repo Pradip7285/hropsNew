@@ -377,7 +377,38 @@ function getTypeIcon($type) {
 
     <script>
         function showInterviewDetails(interviewId) {
-            // In a real implementation, this would load interview details via AJAX
+                            // Load interview details via AJAX
+                fetch(`ajax_handlers.php?action=get_interview_details&interview_id=${interviewId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const interview = data.interview;
+                            document.getElementById('modalCandidateName').textContent = 
+                                interview.candidate_first + ' ' + interview.candidate_last;
+                            document.getElementById('modalJobTitle').textContent = interview.job_title;
+                            document.getElementById('modalInterviewer').textContent = 
+                                interview.interviewer_first + ' ' + interview.interviewer_last;
+                            document.getElementById('modalDateTime').textContent = 
+                                new Date(interview.scheduled_date).toLocaleString();
+                            document.getElementById('modalDuration').textContent = interview.duration + ' minutes';
+                            document.getElementById('modalType').textContent = 
+                                interview.interview_type.replace('_', ' ').toUpperCase();
+                            document.getElementById('modalLocation').textContent = 
+                                interview.location || 'Not specified';
+                            document.getElementById('modalStatus').textContent = 
+                                interview.display_status.toUpperCase();
+                            
+                            if (interview.meeting_link) {
+                                document.getElementById('modalMeetingLink').innerHTML = 
+                                    `<a href="${interview.meeting_link}" target="_blank" class="text-blue-600 hover:underline">Join Meeting</a>`;
+                            } else {
+                                document.getElementById('modalMeetingLink').textContent = 'Not provided';
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading interview details:', error);
+                    });
             document.getElementById('modalContent').innerHTML = 
                 '<p class="text-gray-600">Loading interview details...</p>';
             document.getElementById('interviewModal').classList.remove('hidden');

@@ -2,7 +2,7 @@
 // Application configuration
 define('APP_NAME', 'HR Operations Portal');
 define('APP_VERSION', '1.0.0');
-define('BASE_URL', 'http://localhost/hrops/');
+define('BASE_URL', 'http://localhost/hrops');
 
 // Database configuration
 define('DB_HOST', 'localhost');
@@ -25,8 +25,10 @@ define('SMTP_PORT', 587);
 define('SMTP_USERNAME', '');
 define('SMTP_PASSWORD', '');
 
-// Start session
-session_start();
+// Start session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Include database class
 require_once 'database.php';
@@ -35,7 +37,7 @@ require_once 'database.php';
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > SESSION_TIMEOUT) {
     session_unset();
     session_destroy();
-    header('Location: ' . BASE_URL . 'login.php');
+    header('Location: ' . BASE_URL . '/login.php');
     exit();
 }
 $_SESSION['last_activity'] = time();

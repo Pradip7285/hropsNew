@@ -107,11 +107,23 @@ $goals_stmt->execute($params);
 $goals = $goals_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Get employees for filter
-$employees_stmt = $conn->query("SELECT id, first_name, last_name, employee_id FROM employees ORDER BY first_name, last_name");
+$employees_stmt = $conn->query("
+    SELECT e.id, u.first_name, u.last_name, e.employee_id 
+    FROM employees e 
+    JOIN users u ON e.user_id = u.id 
+    WHERE u.is_active = 1 
+    ORDER BY u.first_name, u.last_name
+");
 $employees = $employees_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Get managers
-$managers_stmt = $conn->query("SELECT id, first_name, last_name FROM employees WHERE position LIKE '%manager%' OR position LIKE '%supervisor%' ORDER BY first_name, last_name");
+$managers_stmt = $conn->query("
+    SELECT e.id, u.first_name, u.last_name 
+    FROM employees e 
+    JOIN users u ON e.user_id = u.id 
+    WHERE u.is_active = 1 AND (e.position LIKE '%manager%' OR e.position LIKE '%supervisor%' OR u.role IN ('hr_recruiter', 'hiring_manager'))
+    ORDER BY u.first_name, u.last_name
+");
 $managers = $managers_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Get statistics

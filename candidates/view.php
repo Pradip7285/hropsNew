@@ -352,7 +352,7 @@ $offers = $offers_stmt->fetchAll();
     <script>
         function updateStatus(status) {
             if (confirm('Are you sure you want to update the candidate status to ' + status + '?')) {
-                window.location.href = 'update_status.php?id=<?php echo $candidate['id']; ?>&status=' + status;
+                window.location.href = '<?php echo BASE_URL; ?>/candidates/update_status.php?id=<?php echo $candidate['id']; ?>&status=' + status;
             }
         }
     </script>

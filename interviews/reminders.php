@@ -43,8 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     ? $interview['candidate_first'] . ' ' . $interview['candidate_last']
                     : $interview['interviewer_first'] . ' ' . $interview['interviewer_last'];
                 
-                // Send reminder email (placeholder - implement actual email sending)
-                $email_sent = sendInterviewReminder($to_email, $to_name, $interview, $reminder_type, $custom_message);
+                // Send reminder email using notification system
+                require_once 'email_notifications.php';
+                $email_sent = sendInterviewReminder($interview_id, $reminder_type);
                 
                 if ($email_sent) {
                     // Log the reminder

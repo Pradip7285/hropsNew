@@ -401,13 +401,13 @@ $interviewers = $interviewers_stmt->fetchAll(PDO::FETCH_ASSOC);
     <script>
         function markCompleted(id) {
             if (confirm('Mark this interview as completed?')) {
-                window.location.href = 'update_status.php?id=' + id + '&status=completed';
+                window.location.href = '<?php echo BASE_URL; ?>/interviews/update_status.php?id=' + id + '&status=completed';
             }
         }
         
         function cancelInterview(id) {
             if (confirm('Are you sure you want to cancel this interview?')) {
-                window.location.href = 'update_status.php?id=' + id + '&status=cancelled';
+                window.location.href = '<?php echo BASE_URL; ?>/interviews/update_status.php?id=' + id + '&status=cancelled';
             }
         }
     </script>

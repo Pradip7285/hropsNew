@@ -294,7 +294,7 @@ $stats = [
     <script>
         function markCompleted(id) {
             if (confirm('Mark this interview as completed?')) {
-                window.location.href = 'update_status.php?id=' + id + '&status=completed';
+                window.location.href = '<?php echo BASE_URL; ?>/interviews/update_status.php?id=' + id + '&status=completed';
             }
         }
     </script>
